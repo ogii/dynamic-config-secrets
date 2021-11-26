@@ -1,0 +1,23 @@
+version: 2.1
+
+parameters:
+  aws_secret_access_key:
+    default: ""
+    type: string
+  gcp_secret_access_key:
+    default: ""
+    type: string
+
+jobs:
+  build:
+    docker:
+      - image: alpine
+    steps:
+      - checkout
+      - run: echo "<< pipeline.parameters.aws_secret_access_key >"
+      - run: echo "<< pipeline.parameters.gcp_secret_access_key >"
+      
+workflows:
+  workflow1:
+    jobs:
+      - build
