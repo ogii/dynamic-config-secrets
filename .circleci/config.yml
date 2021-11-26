@@ -1,0 +1,36 @@
+version: 2.1
+
+setup: true
+ 
+orbs:
+  continuation: circleci/continuation@0.1.2
+
+jobs:
+  setup:
+    docker:
+     - image: cimg/base:2021.07
+    steps:
+      - checkout
+      - run:
+          name: Install necessary binaries
+          command: |
+            sudo apt-get update
+            sudo apt install default-jre
+      - run:
+          name: Create json file containing parameters to be passed to continuation config
+          command: |            
+            # create parameters json to pass to continuation workflow
+            json=$(cat \<<EOD
+             { "aws_secret_access_key": "$AWS_KEY", "gcp_secret_access_key": "$GCP_KEY"}
+            EOD)
+            echo $json >> /home/circleci/test.json
+
+      - run: cat /home/circleci/test.json
+      - continuation/continue:
+          configuration_path: ".circleci/continuation-config.yml"
+          parameters: /home/circleci/test.json
+
+workflows:
+  setup:
+    jobs:
+      - setup
