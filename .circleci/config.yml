@@ -12,10 +12,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install necessary binaries
+          name: Set secrets to be passed to continuation config as parameters
           command: |
-            sudo apt-get update
-            sudo apt install default-jre
+            echo 'export AWS_KEY=TESTAWSKEY' >> $BASH_ENV
+            echo 'export GCP_KEY=TESTGCPKEY' >> $BASH_ENV
       - run:
           name: Create json file containing parameters to be passed to continuation config
           command: |            
