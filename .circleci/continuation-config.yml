@@ -14,8 +14,8 @@ jobs:
       - image: alpine
     steps:
       - checkout
-      - run: echo "<< pipeline.parameters.aws_secret_access_key >"
-      - run: echo "<< pipeline.parameters.gcp_secret_access_key >"
+      - run: echo \"<< pipeline.parameters.aws_secret_access_key >\"
+      - run: echo \"<< pipeline.parameters.gcp_secret_access_key >\"
       
 workflows:
   workflow1:
