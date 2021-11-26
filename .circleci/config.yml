@@ -12,13 +12,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Set secrets to be passed to continuation config as parameters
-          command: |
-            echo 'export AWS_KEY=TESTAWSKEY' >> $BASH_ENV
-            echo 'export GCP_KEY=TESTGCPKEY' >> $BASH_ENV
-      - run:
           name: Create json file containing parameters to be passed to continuation config
-          command: |            
+          command: |
+            AWS_KEY=TESTAWSKEY
+            GCP_KEY=TESTGCPKEY
             # create parameters json to pass to continuation workflow
             json=$(cat \<<EOD
              { "aws_secret_access_key": "$AWS_KEY", "gcp_secret_access_key": "$GCP_KEY"}
